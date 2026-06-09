@@ -1,8 +1,23 @@
 from scoring import calculate_score
+from entropy import calculate_entropy
 
+
+def get_entropy_rating(entropy):
+    if entropy < 40:
+        return "Poor"
+
+    if entropy < 60:
+        return "Fair"
+
+    if entropy < 80:
+        return "Good"
+
+    return "Excellent"
 
 def analyze_password(password):
     score = calculate_score(password)
+    entropy = calculate_entropy(password)
+    entropy_rating = get_entropy_rating(entropy)
 
     issues = []
     suggestions = []
@@ -36,6 +51,8 @@ def analyze_password(password):
 
     return {
         "score": score,
+        "entropy": entropy,
+        "entropy_rating": entropy_rating,
         "strength": strength,
         "issues": issues,
         "suggestions": suggestions
